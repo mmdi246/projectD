@@ -1,100 +1,177 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-background:#000;
-overflow:hidden;
-font-family:Consolas,monospace;
-color:#00ff66;
+body {
+    background: #000;
+    color: #00ff66;
+    font-family: "Courier New", monospace;
+    overflow: hidden;
 }
 
-#screen{
-width:100vw;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#000;
+#screen {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at center, #031a0b 0%, #000 70%);
 }
 
-#terminal{
-width:92%;
-height:90%;
-padding:25px;
-border:1px solid #00ff66;
-box-shadow:
-0 0 10px #00ff66,
-0 0 25px #00ff66;
-background:#000;
-overflow:hidden;
+#terminal {
+    width: 92%;
+    height: 90%;
+    padding: 30px;
+    border: 1px solid rgba(0,255,100,0.7);
+    box-shadow:
+        0 0 10px rgba(0,255,100,0.5),
+        inset 0 0 30px rgba(0,255,100,0.05);
+    overflow: hidden;
+    position: relative;
 }
 
-#title{
-font-size:22px;
-margin-bottom:20px;
-color:#00ff66;
-letter-spacing:2px;
+#title {
+    color: #00ff66;
+    font-size: 20px;
+    letter-spacing: 4px;
+    margin-bottom: 25px;
+    text-shadow: 0 0 10px #00ff66;
 }
 
-#output{
-white-space:pre-wrap;
-line-height:28px;
-font-size:18px;
+#output {
+    font-size: 17px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    text-shadow: 0 0 6px #00ff66;
 }
 
-#cursor{
-display:inline-block;
-animation:blink .8s infinite;
-font-size:20px;
+#cursor {
+    display: inline-block;
+    margin-top: 5px;
+    animation: blink 0.7s infinite;
 }
 
-@keyframes blink{
+@keyframes blink {
+    0%, 50% {
+        opacity: 1;
+    }
 
-50%{
-opacity:0;
+    51%, 100% {
+        opacity: 0;
+    }
 }
 
+/* CRT Scanlines */
+
+#terminal::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.02) 0px,
+            rgba(255,255,255,0.02) 1px,
+            transparent 2px,
+            transparent 4px
+        );
 }
 
-.glitch{
+/* Glitch */
 
-animation:glitch .08s infinite;
+.glitch {
+    animation: glitch 0.15s infinite;
+}
+
+@keyframes glitch {
+
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(2px);
+    }
+
+    50% {
+        transform: translateX(-2px);
+    }
+
+    75% {
+        transform: translateX(1px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
 
 }
 
-@keyframes glitch{
+/* Colors */
 
-0%{
-transform:translateX(2px);
+.red {
+    color: #ff0033;
+    text-shadow: 0 0 10px #ff0033;
 }
 
-50%{
-transform:translateX(-2px);
+.yellow {
+    color: #ffd000;
+    text-shadow: 0 0 10px #ffd000;
 }
 
-100%{
-transform:translateX(2px);
+.blue {
+    color: #00c8ff;
+    text-shadow: 0 0 10px #00c8ff;
 }
 
+/* Full screen warning effect */
+
+.warning {
+    animation: warningFlash 0.3s infinite;
 }
 
-.red{
+@keyframes warningFlash {
 
-color:#ff0033;
+    0% {
+        background: #000;
+    }
+
+    50% {
+        background: #180000;
+    }
+
+    100% {
+        background: #000;
+    }
 
 }
 
-.yellow{
+/* Progress bar */
 
-color:#ffd000;
-
+.progress {
+    color: #00ff66;
+    letter-spacing: 2px;
 }
 
-.blue{
+/* Fade */
 
-color:#00c8ff;
+.fade-out {
+    animation: fadeOut 2s forwards;
+}
+
+@keyframes fadeOut {
+
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 
 }
