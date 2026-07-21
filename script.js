@@ -1,142 +1,87 @@
 const output = document.getElementById("output");
 
-const lines = [
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-"[BOOT] Initializing secure terminal...",
-"",
-"Loading encrypted kernel...",
-"",
-"[OK] Memory allocated",
-"[OK] Firewall bypassed",
-"",
-"Connecting to remote host...",
-"",
-"IP : 185.XX.XX.XX",
-"PORT : 443",
-"",
-"Authentication...",
-"",
-"SUCCESS",
-"",
-"Scanning device...",
-"",
-"Camera ............. FOUND",
-"Microphone ......... FOUND",
-"Gallery ............ FOUND",
-"Messages ........... FOUND",
-"Contacts ........... FOUND",
-"GPS ................ FOUND",
-"",
-"Downloading files...",
-"",
+const messages = [
+    "[BOOT] Initializing Project D...",
+    "[SYSTEM] Establishing encrypted connection...",
+    "[OK] Connection established.",
+    "",
+    "Searching for memory fragments...",
+    "",
+    "[SCAN] Fragment #01 ........ FOUND",
+    "[SCAN] Fragment #02 ........ FOUND",
+    "[SCAN] Fragment #03 ........ FOUND",
+    "",
+    "Decrypting memory archive...",
+    "",
+    "██████████████████████████████",
+    "",
+    "WARNING: Unknown emotional signature detected.",
+    "",
+    "Analyzing...",
+    "",
+    "This file does not belong here.",
+    "",
+    "Someone left a message.",
+    "",
+    "ACCESSING MEMORY...",
 ];
 
-let i = 0;
+async function typeText(text, speed = 35) {
+    const line = document.createElement("div");
+    output.appendChild(line);
 
-function typeLine(){
+    for (let char of text) {
+        line.innerHTML += char;
+        await sleep(speed);
+    }
+}
 
-if(i >= lines.length){
+async function progressBar() {
 
-downloadSequence();
+    const container = document.createElement("div");
+    output.appendChild(container);
 
-return;
+    for (let i = 0; i <= 100; i++) {
+
+        let filled = Math.floor(i / 5);
+        let empty = 20 - filled;
+
+        container.innerHTML =
+            DECODING [${"█".repeat(filled)}${"░".repeat(empty)}] ${i}%;
+
+        await sleep(45);
+    }
+}
+
+async function startProject() {
+
+    await typeText("PROJECT D // SECURE ARCHIVE", 40);
+    await sleep(700);
+
+    for (const message of messages) {
+        await typeText(message, 25);
+        await sleep(350);
+    }
+
+    await sleep(800);
+
+    await progressBar();
+
+    await sleep(1000);
+
+    await typeText("");
+    await typeText("DECRYPTION COMPLETE.", 50);
+
+    await sleep(800);
+
+    await typeText("But there is something else...", 60);
+
+    await sleep(1500);
+
+    await typeText("A message was found.", 60);
 
 }
 
-let text = lines[i];
-
-let p = document.createElement("div");
-
-output.appendChild(p);
-
-let j = 0;
-
-let interval = setInterval(()=>{
-
-if(j < text.length){
-
-p.innerHTML += text.charAt(j);
-
-j++;
-
-}else{
-
-clearInterval(interval);
-
-i++;
-
-setTimeout(typeLine,250);
-
-}
-
-},35);
-
-}
-
-function downloadSequence(){
-
-let percent=0;
-
-let bar=document.createElement("div");
-
-output.appendChild(bar);
-
-let t=setInterval(()=>{
-
-percent++;
-
-bar.innerHTML="Downloading files... "+percent+"%";
-
-if(percent>=100){
-
-clearInterval(t);
-
-setTimeout(finalScan,700);
-
-}
-
-},60);
-
-}
-
-function finalScan(){
-
-let txt=document.createElement("div");
-
-output.appendChild(txt);
-
-txt.innerHTML="";
-
-let words=[
-
-"Searching photos...",
-
-"Searching memories...",
-
-"Decrypting emotions...",
-
-"Analyzing heart...",
-
-"Searching target..."
-
-];
-
-let k=0;
-
-let timer=setInterval(()=>{
-
-txt.innerHTML+=words[k]+"<br>";
-
-k++;
-
-if(k>=words.length){
-
-clearInterval(timer);
-
-}
-
-},900);
-
-}
-
-typeLine();
+startProject();
